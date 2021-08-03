@@ -78,9 +78,7 @@ const Layout = ({ title, description, containerBoxProps, contentBoxProps, button
 					{description}
 				</Box>
 				<Box width='100%'>
-					<Button style={{ alignSelf: (isMobile ? 'center' : 'flex-start') }} disableElevation endIcon={<ArrowForwardRoundedIcon />} color='primary' size="large" component={'a'} href='#' variant='contained' {...buttonProps}>
-						Button
-					</Button>
+					<Button style={{ alignSelf: (isMobile ? 'center' : 'flex-start') }} disableElevation endIcon={<ArrowForwardRoundedIcon />} color='primary' size="large" component={'a'} href='#' variant='contained' {...buttonProps} />
 				</Box>
 			</Box>
 			<img alt='igreja' width={(dimensions.width * 0.4939)} {...responsivePhotosSection().img} {...imgProps} />

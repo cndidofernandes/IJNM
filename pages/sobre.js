@@ -23,7 +23,7 @@ export default function Sobre(props) {
 				>
 					<Grid container spacing={2} justifyContent='space-between'>
 						<Grid item xs={12} md={6} lg={6}>
-							<Box display='flex' component={'img'} width='100%' minHeight={350} bgcolor='#f0f0f0' src='http://localhost/igreja/fundo1.jpg' />
+							<Box display='flex' component={'img'} width='100%' minHeight={350} bgcolor='#f0f0f0' src='/igreja/fundo1.jpg' />
 						</Grid>
 						<Grid item xs={12} md={6} lg={5}>
 							<Hidden smUp>
