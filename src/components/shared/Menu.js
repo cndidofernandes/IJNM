@@ -67,7 +67,7 @@ export default function Menu({ open, onClose }) {
 
 					<Link href='/' style={{ color: 'inherit' }}>
 						<Box px={1.5} display='flex' alignItems='center' color='inherit'>
-							<Box component={'img'} src='/logo_mini.png' alt='logo' width={36} height={36} bgcolor='primary.light' />
+							<Box component={'img'} src='/logo_mini.png' alt='logo' width={38} height={38} />
 						</Box>
 					</Link>
 
