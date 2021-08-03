@@ -1,4 +1,3 @@
-import jwtCheck from 'express-jwt'
 import jwt from 'jsonwebtoken'
 import { Unauthorized } from './errors';
 

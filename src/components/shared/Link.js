@@ -62,4 +62,8 @@ Link.propTypes = {
   prefetch: PropTypes.bool,
 };
 
-export default React.forwardRef((props, ref) => <Link {...props} innerRef={ref} />);
+const LinkForward = React.forwardRef((props, ref) => <Link {...props} innerRef={ref} />);
+
+LinkForward.displayName = 'LinkForward';
+
+export default LinkForward;

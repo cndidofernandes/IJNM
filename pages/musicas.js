@@ -82,9 +82,9 @@ function Content() {
 				pageSize: backend.data.pageSize,
 				listMusicas: [
 					{ "id": 53, "capaUrl": "/igreja/musica1.jpg", "titulo": "Maravilhoso Deus", "artista": "Banda", "linkDaMusica": "https://open.spotify.com/track/2XzdRRm5WZBnCm7fmZEafR?si=2649cdd8cbc249b3", "criadoEM": "2021-07-23T19:42:27.000Z" },
-					{ "id": 52, "capaUrl": "/igreja/musica2.png", "titulo": "Yessua", "artista": "Banda", "linkDaMusica": "https://open.spotify.com/artist/6VvUpLELtkw8S1BEkEWym7", "criadoEM": "2021-07-23T18:45:36.000Z" }, 
-					{ "id": 51, "capaUrl": "/igreja/musica3.jpg", "titulo": "Hosanna", "artista": "Banda", "linkDaMusica": "https://open.spotify.com/album/3ze1LwWKbEFnthXd0VxvS7", "criadoEM": "2021-07-23T18:43:54.000Z" }, 
-					{ "id": 50, "capaUrl": "/igreja/musica4.jpg", "titulo": "I Surrender", "artista": "Banda", "linkDaMusica": "https://open.spotify.com/artist/7yQjrGrrDaA7vXTZTMFMoR", "criadoEM": "2021-07-23T18:42:15.000Z" }, 
+					{ "id": 52, "capaUrl": "/igreja/musica2.png", "titulo": "Yessua", "artista": "Banda", "linkDaMusica": "https://open.spotify.com/artist/6VvUpLELtkw8S1BEkEWym7", "criadoEM": "2021-07-23T18:45:36.000Z" },
+					{ "id": 51, "capaUrl": "/igreja/musica3.jpg", "titulo": "Hosanna", "artista": "Banda", "linkDaMusica": "https://open.spotify.com/album/3ze1LwWKbEFnthXd0VxvS7", "criadoEM": "2021-07-23T18:43:54.000Z" },
+					{ "id": 50, "capaUrl": "/igreja/musica4.jpg", "titulo": "I Surrender", "artista": "Banda", "linkDaMusica": "https://open.spotify.com/artist/7yQjrGrrDaA7vXTZTMFMoR", "criadoEM": "2021-07-23T18:42:15.000Z" },
 					{ "id": 49, "capaUrl": "/igreja/musica6.jpg", "titulo": "Grace", "artista": "Banda", "linkDaMusica": "https://open.spotify.com/track/1urrG04mC0IopJD7vpKiiW", "criadoEM": "2021-07-23T18:36:23.000Z" },
 					{ "id": 48, "capaUrl": "/igreja/musica5.jpeg", "titulo": "Som do céu", "artista": "Banda", "linkDaMusica": "https://open.spotify.com/track/0GKVeDYgvJyCMVafUCGjUf", "criadoEM": "2021-07-23T02:21:38.000Z" }
 				],
@@ -104,7 +104,7 @@ function Content() {
 		)
 	} else if (backend.error) {
 		return (
-			<Grid item xs={12}  md={4} lg={3}>
+			<Grid item xs={12} md={4} lg={3}>
 				<Box fontSize='h6.fontSize'>{backend.error.message}</Box>)
 			</Grid>
 		)
@@ -133,7 +133,9 @@ export default function Musica(props) {
 				<Box mt={4} />
 				<Grid container justifyContent='space-between' alignItems='center'>
 					<Grid item xs={12} md={4} lg={3}>
-						<Box fontSize={'h4.fontSize'} fontWeight='fontWeightBold' children="Ouvir músicas" />
+						<Box fontSize={'h4.fontSize'} fontWeight='fontWeightBold'>
+							Ouvir músicas
+						</Box>
 					</Grid>
 					<Grid item xs={12} md={4} lg={3}>
 						<Hidden implementation='css' smUp>

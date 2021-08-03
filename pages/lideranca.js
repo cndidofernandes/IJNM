@@ -14,7 +14,7 @@ export default function NossaLideranca(props){
 		<>
 			<Container>
 				<Box mt={4} />
-				<Box fontSize={'h4.fontSize'} textAlign='left' fontWeight='fontWeightBold' children="Nossa Liderança"/>
+				<Box fontSize={'h4.fontSize'} textAlign='left' fontWeight='fontWeightBold'>Nossa Liderança</Box>
 				<Box mt={8} />
 
 				<Content/>		

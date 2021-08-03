@@ -32,19 +32,25 @@ export default function EventoItem({ actividade, ...rest }) {
 
 
         <Box mx={1} px={0.5} >
-          <Box fontSize='subtitle1.fontSize' fontWeight={500} children={`${actividade.tipo}: ${actividade.nome}`} />
+          <Box fontSize='subtitle1.fontSize' fontWeight={500}>
+            {`${actividade.tipo}: ${actividade.nome}`}
+          </Box>
           <Box pt={1.5} alignItems='center' display='flex'>
             <Box color='error.dark' mr={1}>
               <PlaceRoundedIcon color='inherit' />
             </Box>
-            <Typography color='textSecondary' gutterBottom align='center' variant='caption' children={actividade.local} />
+            <Typography color='textSecondary' gutterBottom align='center' variant='caption'>
+              {actividade.local}
+            </Typography>
           </Box>
 
           <Box pt={.5} pb={1} alignItems='center' display='flex'>
             <Box color='text.secondary' mr={1}>
               <ScheduleIcon color='inherit' />
             </Box>
-            <Typography gutterBottom color='textSecondary' variant='caption' children={startEndDateToString(actividade.dataDeInicio, actividade.dataDeTermino)} />
+            <Typography gutterBottom color='textSecondary' variant='caption'>
+              {startEndDateToString(actividade.dataDeInicio, actividade.dataDeTermino)}
+            </Typography>
           </Box>
 
         </Box>

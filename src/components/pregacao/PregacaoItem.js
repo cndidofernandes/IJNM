@@ -23,7 +23,7 @@ const useStyle = makeStyles(theme => ({
     padding: -16,
     backgroundColor: "rgba(0,0,0, .3)",
     color: '#fff',
-    '&:hover':{
+    '&:hover': {
       transform: 'scale(1.3)'
     }
 
@@ -51,15 +51,19 @@ export default function PregacaoItem({ pregacao }) {
 
   return (
     <Box>
-      <Box borderRadius={8} position='relative' component={Link} underline="none" href={pregacao.linkDoVideo}>
+      <Box borderRadius={8} position='relative' component={Link} target="_blank" rel="noreferrer" underline="none" href={pregacao.linkDoVideo}>
         <AspectRatio width='100%' aspectRatio={1} mb={2} bgcolor='text.secondary' position='relative'>
           <CardMedia className={classes.cover} image={pregacao.capaUrl} title={pregacao.tema} component={'img'} />
           <PlayArrowRoundedIcon className={classes.playButton} fontSize='inherit' />
         </AspectRatio>
       </Box>
-      <Box fontSize='subtitle2.fontSize' fontWeight='fontWeightMedium' children={pregacao.tema} />
+      <Box fontSize='subtitle2.fontSize' fontWeight='fontWeightMedium'>
+        {pregacao.tema}
+      </Box>
       <Box display='flex' alignItems={'center'}>
-        <Box color='text.secondary' fontSize='body2.fontSize' children={pregacao.pregador} />
+        <Box color='text.secondary' fontSize='body2.fontSize'>
+          {pregacao.pregador}
+        </Box>
       </Box>
 
     </Box>

@@ -41,14 +41,22 @@ export default function MusicaItem({ musica }) {
         <AspectRatio width='100%' aspectRatio={1} mb={2} bgcolor='#2e2e2e' position='relative' >
           <CardMedia className={classes.cover} image={musica.capaUrl} title={musica.titulo} component={'img'} />
 
-          <Box borderRadius={2.5} style={{background: 'linear-gradient(45deg, #212121, transparent)', width: "100%", height: "100%",}} color='#fff' position='absolute' top={0} left={0} p={2} display='flex' alignItems={'center'} >
+          <Box borderRadius={2.5} style={{ background: 'linear-gradient(45deg, #212121, transparent)', width: "100%", height: "100%", }} color='#fff' position='absolute' top={0} left={0} p={2} display='flex' alignItems={'center'} >
             <div>
               <MusicNoteRoundedIcon className={classes.playButton} fontSize='inherit' />
-              <Box fontSize='h6.fontSize' fontWeight='fontWeightBold' children={musica.titulo} />
+              <Box fontSize='h6.fontSize' fontWeight='fontWeightBold'>
+                {musica.titulo}
+              </Box>
               <Box display='flex' alignItems={'center'}>
-                <Box fontSize='body2.fontSize' children={musica.artista} />
-                <Box fontSize={'caption.fontSize'} mx={1} children={'•'} />
-                <Box color='#fff' fontSize='caption.fontSize' children={dateToString('d m Y', musica.criadoEM)} />
+                <Box fontSize='body2.fontSize'>
+                  {musica.artista}
+                </Box>
+                <Box fontSize={'caption.fontSize'} mx={1}>
+                  {'•'}
+                </Box>
+                <Box color='#fff' fontSize='caption.fontSize'>
+                  {dateToString('d m Y', musica.criadoEM)}
+                </Box>
               </Box>
             </div>
           </Box>

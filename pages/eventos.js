@@ -1,6 +1,4 @@
 import React from "react";
-import TopAppbar from "../src/components/shared/TopAppbar";
-import Footer from "../src/components/shared/footer";
 import SelectBox from "../src/components/shared/SelectBox";
 import EventoItem from "../src/components/eventos/EventoItem";
 import Grid from "@material-ui/core/Grid";
@@ -17,16 +15,16 @@ export default function EventoPage(props) {
 		searchText: ''
 	});
 	const options = [
-		'Opcao 1',
-		'Opcao 2',
-		'Opcao 3',
-		'Opcao 4',
-		'Opcao 5',
+		'Culto',
+		'Batismo',
+		'Jejum',
+		'Conferência',
+		'Oração',
 	]
 
 	const handleCategoriaChange = (prop) => e => {
 		const val = e.target.value;
-	
+
 		setValues((prev) => ({
 			...prev,
 			[prop]: val
@@ -41,11 +39,13 @@ export default function EventoPage(props) {
 
 
 	return (
-		
+
 		<Container>
 			<Grid container justifyContent='space-between' alignItems={'center'}>
 				<Grid item xs={12} md={4} lg={3}>
-					<Box my={3} fontSize={'h4.fontSize'} fontWeight='fontWeightBold' children="Eventos" />
+					<Box my={3} fontSize={'h4.fontSize'} fontWeight='fontWeightBold'>
+						Próximos eventos
+					</Box>
 				</Grid>
 				<Grid item xs={12} md={4} lg={4}>
 					<Hidden implementation='css'>
@@ -82,7 +82,7 @@ function Content() {
 	const [eventos, setEventos] = React.useState([
 		{ id: 12, nome: 'Unção', tipo: 'Culto', local: 'Tchihoco, Rua Direita do Estádio da Tundavala', dataDeTermino: null, dataDeInicio: '2021-02-23 07:00:00', capaUrl: "/igreja/evento1.jpg" },
 		{ id: 13, nome: 'Buscando pelo avivamento', tipo: 'Jejum e oração', local: 'Tchihoco, Rua Direita do Estádio da Tundavala', dataDeTermino: '2021-06-16 16:00:00', dataDeInicio: '2021-06-14 00:00:00', capaUrl: "/igreja/evento7.jpg" },
-		{ id: 14, nome: 'Mulheres com Propósito', tipo: 'Conferência', local:'Tchihoco, Rua Direita do Estádio da Tundavala',  dataDeTermino: '2021-07-10 08:00:00', dataDeInicio: '2021-07-10 08:00:00', capaUrl: "/igreja/evento3.jpg" },
+		{ id: 14, nome: 'Mulheres com Propósito', tipo: 'Conferência', local: 'Tchihoco, Rua Direita do Estádio da Tundavala', dataDeTermino: '2021-07-10 08:00:00', dataDeInicio: '2021-07-10 08:00:00', capaUrl: "/igreja/evento3.jpg" },
 		{ id: 15, nome: 'Domingo Profético', tipo: 'Culto', local: 'Tchihoco, Rua Direita do Estádio da Tundavala', dataDeTermino: '2021-07-25 07:00:00', dataDeInicio: '2021-07-25 07:00:00', capaUrl: "/igreja/evento4.jpg" },
 	]);
 

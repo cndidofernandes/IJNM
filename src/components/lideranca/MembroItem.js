@@ -31,8 +31,12 @@ export default function MembroItem({ membro }) {
   return (
     <Box mb={6}>
       <Avatar style={{ height: 192, width: 192, marginLeft: 'auto', marginRight: 'auto' }} alt={membro.nome} src={membro.foto} />
-      <Box mt={2} textAlign="center" fontSize='h6.fontSize' fontWeight='fontWeightBold' children={membro.nome} />
-      <Box textAlign="center" fontSize='body1.fontSize' color='text.secondary' children={membro.funcao} />
+      <Box mt={2} textAlign="center" fontSize='h6.fontSize' fontWeight='fontWeightBold'>
+        {membro.nome}
+      </Box>
+      <Box textAlign="center" fontSize='body1.fontSize' color='text.secondary'>
+        {membro.funcao}
+      </Box>
 
     </Box>
   )

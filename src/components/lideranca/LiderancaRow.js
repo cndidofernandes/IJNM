@@ -6,36 +6,38 @@ import Grid from "@material-ui/core/Grid";
 import MembroItem from "./MembroItem";
 
 
-export default function LiderancaRow({funcao}){
+export default function LiderancaRow({ funcao }) {
 
-  if(!funcao){
+  if (!funcao) {
     return (<>Dados Corrompidos</>);
   }
 
-	return(
-		<Box py={4}>
-      <Box fontSize='h4.fontSize' textAlign='center' fontWeight='fontWeightRegular' children={funcao.funcao} mb={4}/>
+  return (
+    <Box py={4}>
+      <Box fontSize='h4.fontSize' textAlign='center' fontWeight='fontWeightRegular' mb={4}>
+        {funcao.funcao}
+      </Box>
       <Grid container spacing={4} justifyContent='center'>
-        <Content membros={funcao.membros}/>
+        <Content membros={funcao.membros} />
       </Grid>
-        
 
-		</Box>
-		)
+
+    </Box>
+  )
 }
 
 
 
-function Content({membros}){
+function Content({ membros }) {
 
-  if(!membros && !membros.length){
+  if (!membros && !membros.length) {
     return (<Box fontSize='h6.fontSize' >Sem membros de momento</Box>);
   }
 
-  return membros.map((membro, key)=>(
-      <Grid key={membro.id}  item xs={12} md={4}  lg={3}>
-        <MembroItem membro={membro}/>
-      </Grid>
-    ))
+  return membros.map((membro, key) => (
+    <Grid key={membro.id} item xs={12} md={4} lg={3}>
+      <MembroItem membro={membro} />
+    </Grid>
+  ))
 
-} 
+}

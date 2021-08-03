@@ -29,7 +29,7 @@ export default function ImagePickerAndShow(props) {
     }
   }
 
-  React.useEffect( () => {
+  React.useEffect(() => {
     setImage(null)
   }, [props.hidden])
 
@@ -38,14 +38,16 @@ export default function ImagePickerAndShow(props) {
     <>
 
       <Box textAlign='right'>
-        <input type='file' required {...props.inputProps} ref={(input) => {props.inputProps.ref(input); imagePickerRef.current = input;}}  onChange={myHandleInpuChange} accept="image/png, image/jpeg" hidden />
+        <input type='file' required {...props.inputProps} ref={(input) => { props.inputProps.ref(input); imagePickerRef.current = input; }} onChange={myHandleInpuChange} accept="image/png, image/jpeg" hidden />
       </Box>
 
-      <Box textAlign='center' display={hasError ? 'content' : 'none'} color='red' children='Formato de ficheiro não permitido! Deve ser inserida uma imagem!' />
+      <Box textAlign='center' display={hasError ? 'content' : 'none'} color='red'>
+        Formato de ficheiro não permitido! Deve ser inserida uma imagem!
+      </Box>
       {
         (image) && (
           <div>
-            <img src={URL.createObjectURL(image)} alt='comprovativo' style={{width: '100%',borderRadius: 8}} />
+            <img src={URL.createObjectURL(image)} alt='comprovativo' style={{ width: '100%', borderRadius: 8 }} />
           </div>
         )
       }

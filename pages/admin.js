@@ -21,7 +21,7 @@ function Admin() {
 
     useEffect(() => {
         if (isAuthenticated) Router.push('/')
-    }, [])
+    }, [0])
 
     const myHandleSubmitting = async (data) => {
 

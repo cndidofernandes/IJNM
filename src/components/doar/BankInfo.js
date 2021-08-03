@@ -8,45 +8,61 @@ import PhoneRoundedIcon from "@material-ui/icons/PhoneRounded";
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 
 
-export default function BankInfo(){
+export default function BankInfo() {
 
-	return(
+	return (
 		<Container>
 			<Box pt={2} ml={2}>
 				<Typography variant='h4'>
 					<b>Informações bancárias da igreja</b>
 				</Typography>
-				<Box m={4} my={5}/>
+				<Box m={4} my={5} />
 				<Grid container justifyContent='space-between'>
 					<Grid item>
 						<Box display='flex' alignItems='center'>
-							<Box fontWeight="fontWeightBold" children='Titular da conta:' />
-							<Box fontSize='body2.fontSize' color='text.secondary' ml={2} children='XXXXXX XXXXXXXXXXX XXXXX'/>
+							<Box fontWeight="fontWeightBold">
+								Titular da conta:
+							</Box>
+							<Box fontSize='body2.fontSize' color='text.secondary' ml={2}>
+								XXXXXX XXXXXXXXXXX XXXXX
+							</Box>
 						</Box>
-						<Box display='flex' alignItems='center'  mt={2}>
-							<Box fontWeight="fontWeightBold"  children='IBAN:' />
-							<Box fontSize='body2.fontSize' color='text.secondary' ml={2} children='AOA 06XXXXXX XXXXXXXXXXX XXXXX'/>
+						<Box display='flex' alignItems='center' mt={2}>
+							<Box fontWeight="fontWeightBold">
+								IBAN:
+							</Box>
+							<Box fontSize='body2.fontSize' color='text.secondary' ml={2}>
+								AOA 06XXXXXX XXXXXXXXXXX XXXXX
+							</Box>
 						</Box>
-						<Box display='flex' alignItems='flex-start'  mt={2}>
-							<Box fontWeight="fontWeightBold"  children='SWIFT:' />
-							<Box fontSize='body2.fontSize' color='text.secondary' ml={2} children='1312Asda213121' mb={2}/>
+						<Box display='flex' alignItems='flex-start' mt={2}>
+							<Box fontWeight="fontWeightBold">
+								SWIFT
+							</Box>
+							<Box fontSize='body2.fontSize' color='text.secondary' ml={2} mb={2} >
+								1312Asda213121
+							</Box>
 						</Box>
 					</Grid>
 					<Grid item>
 						<Box display='flex' alignItems='center' mt={2} >
-							<PhoneRoundedIcon/>
-							<Box color='text.secondary' ml={2} children='+244 932 771 036'  />
+							<PhoneRoundedIcon />
+							<Box color='text.secondary' ml={2}>
+								+244 932 771 036
+							</Box>
 						</Box>
 					</Grid>
-					<Box mb={4}/>
+					<Box mb={4} />
 					<Grid item>
 						<Box display='flex' alignItems='center' mt={2} pb={1.5}>
-							<EmailOutlinedIcon/>
-							<Box ml={1} color='text.secondary' children='ministeriojesusnossomodelo@gmail.com'  />
+							<EmailOutlinedIcon />
+							<Box ml={1} color='text.secondary'>
+								ministeriojesus.nossomodelo@gmail
+							</Box>
 						</Box>
 					</Grid>
 				</Grid>
 			</Box>
 		</Container>
-		)
+	)
 }

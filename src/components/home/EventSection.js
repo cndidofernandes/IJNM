@@ -19,7 +19,9 @@ export default function EventSection(props) {
                 <Content />
             </Grid>
             <Box textAlign='center' mt={4.5}>
-                <Button endIcon={<ArrowForwardRoundedIcon />} color='primary' size="large" component={'a'} href='/eventos' variant='contained' style={{ border: 'none', boxShadow: 'none' }} children='Ver mais' />
+                <Button endIcon={<ArrowForwardRoundedIcon />} color='primary' size="large" component={'a'} href='/eventos' variant='contained' style={{ border: 'none', boxShadow: 'none' }}>
+                    Ver mais
+                </Button>
             </Box>
         </Box >
     );
