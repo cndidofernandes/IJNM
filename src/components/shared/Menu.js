@@ -38,6 +38,7 @@ export default function Menu({ open, onClose }) {
 		{ text: 'Eventos', icon: <EventRoundedIcon /> , link: '/eventos' },
 		{ text: 'Pregações', icon: <RecordVoiceOverRoundedIcon /> , link: '/pregacoes' },
 		{ text: 'Músicas', icon: <MusicNoteRoundedIcon /> , link: '/musicas' },
+		{ text: 'Galeria', icon: <MusicNoteRoundedIcon /> , link: '/media' },
 		// { text: 'Nossos Ministérios', icon: <InfoRoundedIcon /> , link: '/ministérios' },
 		{ text: 'Nossa Liderança', icon: <PersonRoundedIcon /> , link: '/lideranca' },
 		{ text: 'Nossos Serviços', icon: <ScheduleRoundedIcon /> , link: '/servicos' },
@@ -67,7 +68,8 @@ export default function Menu({ open, onClose }) {
 
 					<Link href='/' style={{ color: 'inherit' }}>
 						<Box px={1.5} display='flex' alignItems='center' color='inherit'>
-							<Box component={'img'} src='/logo_mini.png' alt='logo' width={38} height={38} />
+							<Box component={'img'} src='/logo_mini.png' alt='logo' width={36} height={36} />
+							<Box ml={1} mt={.4}>Jesus Nosso Modelo</Box>
 						</Box>
 					</Link>
 
@@ -78,7 +80,6 @@ export default function Menu({ open, onClose }) {
 				<List>
 					{menuItems.map((item) => (
 						<ListItem button key={item.text} onClick={onLinkClick(item.link)} className={classes.link}>
-							<ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
 							<ListItemText primary={<Box m={1} fontSize='h6.fontSize' fontWeight={700}>{item.text}</Box>} />
 						</ListItem>
 					))}

@@ -37,7 +37,8 @@ export default function TopAppbar(props) {
 							<Box maxWidth="fit-content" color='inherit'>
 								<Link href='/' style={{ color: 'inherit' }}>
 									<Box display='flex' alignItems='center' color='inherit'>
-										<Box component={'img'} src='/logo_mini.png' alt='logo' width={44} height={44}/>
+										<Box component={'img'} src='/logo_mini.png' alt='logo' width={38} height={38} />
+										{(router.route !== '/') && <Box color='text.secondary' ml={1} mt={.3}><b>Jesus Nosso Modelo</b></Box>}
 									</Box>
 								</Link>
 							</Box>

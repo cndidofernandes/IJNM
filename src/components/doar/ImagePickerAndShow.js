@@ -3,6 +3,7 @@ import * as React from 'react';
 import IconButton from "@material-ui/core/IconButton";
 import AddPhotoAlternateOutlinedIcon from "@material-ui/icons/AddPhotoAlternateOutlined";
 import Box from '@material-ui/core/Box';
+import { Typography } from '@material-ui/core';
 
 
 export default function ImagePickerAndShow(props) {
@@ -51,9 +52,13 @@ export default function ImagePickerAndShow(props) {
           </div>
         )
       }
-      <IconButton onClick={handleEscolherImagemClick}>
-        <AddPhotoAlternateOutlinedIcon />
-      </IconButton>
+      <Box display='flex' alignItems='center'>
+        <IconButton onClick={handleEscolherImagemClick}>
+          <AddPhotoAlternateOutlinedIcon />
+        </IconButton>
+        <Typography variant='body2' color='textSecondary'>Inserir foto do comprovativo *</Typography>
+      </Box>
+
     </>
   )
 }

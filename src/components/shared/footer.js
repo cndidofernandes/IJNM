@@ -56,21 +56,21 @@ function Footer() {
                     <Box my={2} display='flex' flexDirection='column' alignItems='center' justifyContent='center' >
                         <EmailRoundedIcon className={classes.icons} />
                         <Typography className={classes.text} variant='body1'>Email</Typography>
-                        <Typography className={classes.text} style={{fontWeight: 400, marginTop: 4}} variant='body2'>ministeriojesus.nossomodelo@gmail.com</Typography>
+                        <Typography className={classes.text} style={{fontWeight: 400, marginTop: 4}} variant='caption'>ministeriojesus.nossomodelo@gmail.com</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={2} md={4}>
                     <Box my={2} display='flex' flexDirection='column' alignItems='center' justifyContent='center' >
                         <CallIcon className={classes.icons} />
                         <Typography className={classes.text} variant='body1'>Ligue</Typography>
-                        <Typography className={classes.text} style={{fontWeight: 400, marginTop: 4}} variant='body2'>+244 932 771 036</Typography>
+                        <Typography className={classes.text} style={{fontWeight: 400, marginTop: 4}} variant='caption'>+244 932 771 036</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={3} md={4}>
                     <Box my={2} display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
                         <LocationOnIcon className={classes.icons} />
                         <Typography className={classes.text} variant='body1'>Localização</Typography>
-                        <Typography className={classes.text} style={{fontWeight: 400, marginTop: 4}} variant='body2'>Tchico, rua direita do estádio tundavala</Typography>
+                        <Typography className={classes.text} style={{fontWeight: 400, marginTop: 4}} variant='caption'>Tchico, rua direita do estádio tundavala</Typography>
                     </Box>
                 </Grid>
             </Grid>

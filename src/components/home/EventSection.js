@@ -6,42 +6,49 @@ import Grid from '@material-ui/core/Grid';
 import EventoItem from "../eventos/EventoItem";
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 
+import Slide from 'react-reveal/Slide';
+
 
 export default function EventSection(props) {
 
-    return (
-        <Box py={8} mb={10} width={'100%'} bgcolor='#f6f6f6'>
-            <Box mb={4.5} fontWeight='fontWeightMedium' fontSize='h2.fontSize' textAlign='center'>
-                Próximos eventos
-            </Box>
+	return (
+		<Box py={8} mb={10} width={'100%'} bgcolor='#f6f6f6'>
+			<Slide bottom cascade>
+				<Box mb={4.5} fontWeight='fontWeightMedium' fontSize='h2.fontSize' textAlign='center'>
+					Próximos eventos
+				</Box>
 
-            <Grid container justifyContent='space-evenly'>
-                <Content />
-            </Grid>
-            <Box textAlign='center' mt={4.5}>
-                <Button endIcon={<ArrowForwardRoundedIcon />} color='primary' size="large" component={'a'} href='/eventos' variant='contained' style={{ border: 'none', boxShadow: 'none' }}>
-                    Ver mais
-                </Button>
-            </Box>
-        </Box >
-    );
+				<Grid container justifyContent={props.isMobile ? 'flex-start' : 'space-evenly'}>
+					<Content events={props.events} />
+				</Grid>
+
+				<Box textAlign='center' mt={props?.events?.length ? 2 : 4.5}>
+					<Button endIcon={<ArrowForwardRoundedIcon />} color='primary' size="large" component={'a'} href='/eventos' variant='contained' style={{ border: 'none', boxShadow: 'none' }}>
+						Ver mais
+					</Button>
+				</Box>
+			</Slide>
+
+		</Box >
+	);
 }
-function Content() {
-    const [eventos, setEventos] = React.useState([
-        { id: 12, nome: 'Unção', tipo: 'Culto', local: 'Tchihoco, Rua Direita do Estádio da Tundavala', dataDeTermino: '2021-02-28 07:00:00', dataDeInicio: '2021-02-28 07:00:00', capaUrl: "/igreja/evento1.jpg" },
-        { id: 13, nome: 'Buscando pelo avivamento', tipo: 'Jejum e oração', local: 'Tchihoco, Rua Direita do Estádio da Tundavala', dataDeTermino: '2021-06-16 16:00:00', dataDeInicio: '2021-06-14 00:00:00', capaUrl: "/igreja/evento7.jpg" },
-        { id: 14, nome: 'Mulheres com Propósito', tipo: 'Conferência', local: 'Tchihoco, Rua Direita do Estádio da Tundavala', dataDeTermino: '2021-07-10 08:00:00', dataDeInicio: '2021-07-10 08:00:00', capaUrl: "/igreja/evento3.jpg" },
 
-    ]);
 
-    if (!eventos && !eventos.length) {
-        return (<Box fontSize='h6.fontSize' >Sem eventos de momento</Box>);
-    }
+function Content({ events }) {
 
-    return eventos.map((evento, key) => (
-        <Grid key={key} item xs={11} md={3}>
-            <EventoItem actividade={evento} />
-        </Grid>
-    ))
+	if (!events?.length) {
+		return (
+			<Grid item xs={12}>
+				<Box textAlign='center' py={5} fontSize='subtitle2.fontSize' color='text.secondary'>Nenhum evento agendado no momento</Box>
+			</Grid>
+		)
+
+	}
+
+	return events?.map((evento, key) => (
+		<Grid key={key} item xs={12} sm={6} md={4} lg={3}>
+			<EventoItem actividade={evento} />
+		</Grid>
+	))
 
 }

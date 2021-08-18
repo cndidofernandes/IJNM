@@ -65,7 +65,7 @@ function xReplace(string, subs, replacer){
     let result='';
     let index=0;
     for(index=0; index<string.length; index++){
-         if(string.charAt(index)===subs || string.charAt(index-1)===subs ){
+         if(string.charAt(index)===subs){
             result +=replacer;
          }else{
             result += string.charAt(index);   

@@ -53,6 +53,7 @@ export default function TopTabs(props) {
         <StyledTab onClick={handleClick('/pregacoes')} label="Pregações" />
 
         <StyledTab onClick={handleClick('/musicas')} label="Músicas" />
+        <StyledTab onClick={handleClick('/media')} label="Galeria" />
 
         <SobreMenu home={props.home}>
           <StyledTab label='Sobre' />

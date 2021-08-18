@@ -37,8 +37,8 @@ export default function MyApp(props) {
   const [appbarSettings, setAppbarSettings] = React.useState(themeAppBar['dark']);
   const [tabSelectedIndex, setTabSelectedIndex] = React.useState(0);
 
-  const handleThemeTrigger = (theme) => {
-    //setAppbarSettings(themeAppBar[theme]);
+  const setTheme = (theme) => {
+    setAppbarSettings(themeAppBar[theme]);
   }
 
   React.useEffect(() => {
@@ -60,7 +60,7 @@ export default function MyApp(props) {
         <CssBaseline />
         <AuthProvider>
           <Layout appbarSettings={appbarSettings} tabSelectedIndex={tabSelectedIndex}>
-            <Component {...pageProps} handleThemeTrigger={handleThemeTrigger} setTabSelectedIndex={setTabSelectedIndex} />
+            <Component {...pageProps} setTheme={setTheme} setTabSelectedIndex={setTabSelectedIndex} />
           </Layout>
         </AuthProvider>
       </ThemeProvider>

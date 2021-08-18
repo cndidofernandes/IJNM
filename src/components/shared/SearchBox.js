@@ -9,7 +9,7 @@ export default function SearchBox({value, onChange, ...rest}){
 	return(
 		<>
 			<TextBox {...rest} placeholder='pesquisar' bgcolor='#fff' border='1px solid #f0f0f0' borderRadius={8} pr={1} endIcon={
-				<IconButton size='small' style={{color: '#000'}}>
+				<IconButton size='small' style={{color: '#000'}} type='submit'>
 					<SearchIcon/>
 				</IconButton>
 			}/>

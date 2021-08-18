@@ -11,7 +11,7 @@ import FormData from 'form-data';
 
 import api from '../../services/api';
 
-import { getError } from '../../helpers/errors';
+import { getErrorBackend } from '../../helpers/errors';
 import { Button } from "@material-ui/core";
 
 import ResponseTip from "../shared/ResponseTip";
@@ -55,7 +55,6 @@ export default function SendConfirmForm() {
 				}
 			});
 
-
 			setBackend({
 				data: {
 					message: 'Obrigado! A sua doação foi feita com sucesso.'
@@ -66,11 +65,19 @@ export default function SendConfirmForm() {
 
 			formRef.current.reset();
 
+			setTimeout(() => {
+				setBackend({
+					loading: false,
+					data: null,
+					error: null
+				})
+			}, 11000);
+
 		} catch (error) {
 
 			setBackend({
                 data: null,
-                error: getError(error, {
+                error: getErrorBackend(error, {
                     '500': 'Ocorreu um erro desconhecido ao fazer a doação. Por favor, tente novamente.'
                 }),
                 loading: false
@@ -90,7 +97,7 @@ export default function SendConfirmForm() {
 						</Typography>
 						<Box p={2} />
 
-						<form ref={formRef} onReset={() => setHiddenImagePreview(true)} >
+						<form ref={formRef} onSubmit={handleSubmit(myHandleSubmitting)} onReset={() => setHiddenImagePreview(true)} >
 							<Grid container justifyContent='space-between'>
 								<Grid item xs={12} md={6} lg={5}>
 									<TextField mb={4} label='Primeiro Nome' placeholder='Seu primeiro nome'
@@ -140,8 +147,8 @@ export default function SendConfirmForm() {
 							</Grid>
 							<Box sx={{ display: 'flex', flexDirection: backend.loading ? 'row' : 'column', alignItems: backend.loading ? 'center' : 'start' }}>
 								<Button disabled={backend.loading} type='submit' color='primary' variant='contained' size='large' style={{ boxShadow: 'none' }}>Enviar</Button>
+								<Box mt={2}/>
 								<ResponseTip backend={backend}/>
-
 							</Box>
 						</form>
 					</Box>

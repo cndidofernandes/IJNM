@@ -1,13 +1,21 @@
 import React from "react";
-import Link from "@material-ui/core/Link";
+
+import ReactPlayer from 'react-player'
+
+import { useRouter } from "next/router";
 import Box from "@material-ui/core/Box";
+import Dialog from '@material-ui/core/Dialog'
 import { makeStyles } from "@material-ui/styles";
 
 import CardMedia from "@material-ui/core/CardMedia";
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 
 import AspectRatio from "../shared/AspectRatio";
+
+import Grid from "@material-ui/core/Grid";
+
 import dateToString from "../../helpers/dateToString";
+import { CardActionArea } from "@material-ui/core";
 
 const useStyle = makeStyles(theme => ({
   playButton: {
@@ -29,7 +37,6 @@ const useStyle = makeStyles(theme => ({
 
   },
   cover: {
-    borderRadius: 8,
     height: 204,
     [theme.breakpoints.up('lg')]: {
       height: 194,
@@ -45,27 +52,35 @@ const useStyle = makeStyles(theme => ({
 export default function PregacaoItem({ pregacao }) {
   const classes = useStyle();
 
+  const router = useRouter();
+
   if (!pregacao) {
     return (<>Dados Corrompidos</>);
   }
 
   return (
-    <Box>
-      <Box borderRadius={8} position='relative' component={Link} target="_blank" rel="noreferrer" underline="none" href={pregacao.linkDoVideo}>
-        <AspectRatio width='100%' aspectRatio={1} mb={2} bgcolor='text.secondary' position='relative'>
-          <CardMedia className={classes.cover} image={pregacao.capaUrl} title={pregacao.tema} component={'img'} />
-          <PlayArrowRoundedIcon className={classes.playButton} fontSize='inherit' />
-        </AspectRatio>
-      </Box>
-      <Box fontSize='subtitle2.fontSize' fontWeight='fontWeightMedium'>
-        {pregacao.tema}
-      </Box>
-      <Box display='flex' alignItems={'center'}>
-        <Box color='text.secondary' fontSize='body2.fontSize'>
+    <CardActionArea onClick={() => router.push(`/pregacoes/${pregacao.slug}`)}>
+      <Box>
+        <Box position='relative'>
+          <AspectRatio width='100%' aspectRatio={1} mb={1} bgcolor='text.secondary' position='relative'>
+            <CardMedia className={classes.cover} image={pregacao.capaUrl} title={pregacao.tema} component={'img'} />
+            <PlayArrowRoundedIcon className={classes.playButton} fontSize='inherit' />
+          </AspectRatio>
+        </Box>
+
+        <Box mt={1.8} fontSize='subtitle2.fontSize' fontWeight="fontWeightMedium">
+          {pregacao.tema}
+        </Box>
+
+        <Box my={0.2} pb={.7} color='text.secondary' fontSize={'0.83rem'}>
           {pregacao.pregador}
         </Box>
-      </Box>
 
-    </Box>
+        <Box fontSize='caption.fontSize' color='text.secondary'>
+          {dateToString('d/M/Y', pregacao.data)}
+        </Box>
+
+      </Box>
+    </CardActionArea>
   )
 }

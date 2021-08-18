@@ -29,9 +29,9 @@ function getMessageErrorByStatus(errorMessages, status) {
         '401': "Ophs! Você não tem autenticação para realizar essa operação.",
         '403': "Ophs! Você não tem autorizacação para realizar essa operação.",
         '404': "Recurso não encontrado.",
-        '500': "Ocorreu um erro desconhecido no servidor.",
+        '500': "Ocorreu um erro desconhecido no servidor. Por favor tente novamente.",
         'ERR_NO_CONNECTION': "Sem conexão com o servidor, verifique a sua internet.",
-        'ERR_UNKNOWN': "Ocorreu um erro desconhecido .",
+        'ERR_UNKNOWN': "Ocorreu um erro desconhecido. Por favor tente novamente.",
         ...errorMessages
     }[`${status}`]
 }
@@ -45,6 +45,8 @@ export function getErrorBackend(error, errorsCustom) {
             errorsCustom,
             error.response.status
         );
+
+        err.status = error.response.status;
 
 
     } else if (error.request) {
