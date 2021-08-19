@@ -23,8 +23,9 @@ export default function Sobre(props) {
 						minHeight: '35vh',
 					}}
 				>
-					<Grid container spacing={2} justifyContent='space-between'>
-						<Slide bottom cascade>
+					<Slide bottom cascade>
+						<Grid container spacing={2} justifyContent='space-between'>
+
 							<Grid item xs={12} md={6} lg={6}>
 								<Box display='flex' component={'img'} width='100%' minHeight={350} bgcolor='#f0f0f0' src='/igreja/fundo1.jpg' />
 							</Grid>
@@ -59,9 +60,9 @@ export default function Sobre(props) {
 									O nosso grande e sincero desejo, é que as histórias vividas por Homens e Mulheres de Deus possam viver-se nesta geração e no futuro. Pois temos um legado deixado pelo Senhor Jesus Cristo, e continuado por Paulo, Lucas, Pedro e posteriormente por John Lake, John Alexandre Dowie, Maria Woodworth Etter, entre outros tantos que se entregaram para que Deus operasse maravilhosamente em suas gerações.
 								</Typography>
 							</Grid>
-						</Slide>
-					</Grid>
 
+						</Grid>
+					</Slide>
 				</Box>
 			</Container>
 
