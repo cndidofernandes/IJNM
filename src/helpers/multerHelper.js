@@ -7,7 +7,7 @@ export const imageUpload = multer({
             cb(null, './public/imagens')
         },
         filename: function (req, file, cb) {
-            cb(null, ''+Date.now())
+            cb(null, ''+Date.now()+file.originalname.slice(-4))
         }
     }),
     fileFilter: function (req, file, cb) {
@@ -38,13 +38,13 @@ export function deleteFile(path) {
 //var sftpStorage = require('multer-sftp');
 /*var storage = sftpStorage({
   sftp: {
-    host: '127.0.0.1',
-    port: 22,
-    username: 'username',
-    password: 'password'
+    host: process.env.FTP_HOST,
+    port: process.env.FTP_PORT,
+    username: process.env.FTP_USER,
+    password: process.env.FTP_PASSWORD
   },
   destination: function (req, file, cb) {
-    cb(null, '/upload-files/covers')
+    cb(null, './public/imagens')
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now())

@@ -56,20 +56,20 @@ function PregacaoDetailPage(props) {
             <Box position='relative' bgcolor='#2e2e2e' width={widthPlayer-1} height={heightPlayer-2.3}>
                 <ReactPlayer onReady={onReadyPlayer} onError={onErrorPlayer} width={widthPlayer} height={heightPlayer} url={props.data.linkDoVideo} />
                 {playerData.isLoadingVideo &&
-                    <Box style={{
-                        left: 'calc(41% - 0px)',
+                    <Box width='100%' textAlign="center" style={{
                         top: 'calc(50% - 24px)',
+                        left:'center',
                         position: 'absolute'
                     }} color='#fff' px={2}>
                         Carregando a pregação...
                     </Box>
                 }
                 {playerData.hasError &&
-                    <Box style={{
-                        left: 'calc(41% - 0px)',
+                    <Box width='100%' textAlign="center" style={{
+                        left: 'center',
                         top: 'calc(50% - 24px)',
                         position: 'absolute'
-                    }} color='#fff' px={2}>
+                    }} fontWeight='bold' fontSize='h6.fontSize' color='#fff' px={2}>
                         Ooophs! Ocorreu um erro ao carregar a pregação
                     </Box>
                 }

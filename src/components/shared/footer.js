@@ -70,7 +70,7 @@ function Footer() {
                     <Box my={2} display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
                         <LocationOnIcon className={classes.icons} />
                         <Typography className={classes.text} variant='body1'>Localização</Typography>
-                        <Typography className={classes.text} style={{fontWeight: 400, marginTop: 4}} variant='caption'>Tchico, rua direita do estádio tundavala</Typography>
+                        <Typography className={classes.text} style={{fontWeight: 400, marginTop: 4}} variant='caption'>Tchioco, rua direita do estádio tundavala</Typography>
                     </Box>
                 </Grid>
             </Grid>
@@ -93,7 +93,7 @@ function Footer() {
             </Box >
 
             <Box mb={1} p={2} px={3} color='#fff' component='span' fontSize='subtitle2.fontSize' fontWeight='fontWeightBold' textAlign='center'>
-                Igreja Penteconstal Jesus Cristo Nosso Modelo © 2021
+                Jesus Cristo Nosso Modelo © 2021
             </Box>
             <Typography variant='caption' className={classes.text} style={{fontWeight: 400, paddingBottom: 4}}>Todos os direitos reservados</Typography>
 

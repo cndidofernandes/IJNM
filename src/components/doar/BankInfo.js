@@ -24,7 +24,7 @@ export default function BankInfo() {
 								Titular da conta:
 							</Box>
 							<Box fontSize='body2.fontSize' color='text.secondary' ml={2}>
-								XXXXXX XXXXXXXXXXX XXXXX
+								Associação Jesus Cristo Vive
 							</Box>
 						</Box>
 						<Box display='flex' alignItems='center' mt={2}>
@@ -32,15 +32,15 @@ export default function BankInfo() {
 								IBAN:
 							</Box>
 							<Box fontSize='body2.fontSize' color='text.secondary' ml={2}>
-								AOA 06XXXXXX XXXXXXXXXXX XXXXX
+								AO06.0010.0401.0305.1938.0116.7
 							</Box>
 						</Box>
 						<Box display='flex' alignItems='flex-start' mt={2}>
 							<Box fontWeight="fontWeightBold">
-								SWIFT
+								BPC
 							</Box>
 							<Box fontSize='body2.fontSize' color='text.secondary' ml={2} mb={2} >
-								1312Asda213121
+								0401-U519-38011
 							</Box>
 						</Box>
 					</Grid>

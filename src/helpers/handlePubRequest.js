@@ -33,7 +33,7 @@ export default function registerPubRequestDB(mysqlDB, table, requiredFieldsName,
 
                     const rawResult = await mysqlDB.query(`INSERT INTO ${table} SET ?`, data);
 
-                    if (!rawResult[0].affectedRows) throw new GeneralError(errMsg, 50);
+                    if (!rawResult.affectedRows) throw new GeneralError(errMsg, 50);
 
                     await mysqlDB.end();
 
