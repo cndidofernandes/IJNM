@@ -17,7 +17,20 @@ var storage = sftpStorage({
     },
 })
 
-export const imageUpload = multer({storage})
+export const imageUpload = multer({
+    storage,
+    fileFilter: function (req, file, cb) {
+
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
+            return cb(null, true);
+
+        cb(new GeneralError('Esse tipo de ficheiro não é permitido.', 62));
+
+    },
+    limits: {
+        fileSize: 1850000
+    }
+})
 
 /*export const imageUpload = multer({
     storage: multer.diskStorage({
