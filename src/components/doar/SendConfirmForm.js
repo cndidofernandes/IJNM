@@ -78,7 +78,8 @@ export default function SendConfirmForm() {
 			setBackend({
                 data: null,
                 error: getErrorBackend(error, {
-                    '500': 'Ocorreu um erro desconhecido ao fazer a doação. Por favor, tente novamente.'
+                    '500': 'Ocorreu um erro desconhecido ao fazer a doação. Por favor, tente novamente.',
+					'400': 'Oophs! A foto do comprovativo é muito grande, tamanho máximo permitido é 2 MB.'
                 }),
                 loading: false
             })

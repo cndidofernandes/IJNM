@@ -1,6 +1,6 @@
 import nc from 'next-connect';
 
-import { imageUpload, deleteFile } from "./multerHelper";
+import { imageUpload } from "./multerHelper";
 import onError from './handleOnErrorApi';
 import { BadRequest, GeneralError } from "./errors";
 import {checkAuthToken, checkAdminAuthorization} from './auth'
