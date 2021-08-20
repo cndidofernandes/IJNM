@@ -40,7 +40,7 @@ export default function registerPubRequestDB(mysqlDB, table, requiredFieldsName,
                     res.status(201).json({ success: { message: okMsg, data: null } })
 
                 } catch (err) {
-                    deleteFile(req?.file?.path);
+                    //deleteFile(req?.file?.path);
                     next(err);
                 }
 

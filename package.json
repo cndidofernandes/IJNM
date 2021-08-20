@@ -16,6 +16,7 @@
     "form-data": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
+    "multer-sftp": "^1.1.1",
     "next": "11.0.1",
     "next-connect": "^0.10.1",
     "nookies": "^2.5.2",
@@ -27,7 +28,8 @@
     "react-player": "^2.9.0",
     "react-reveal": "^1.2.2",
     "serverless-mysql": "^1.5.4",
-    "slugify": "^1.6.0"
+    "slugify": "^1.6.0",
+    "ssh2-sftp-client": "^7.0.3"
   },
   "devDependencies": {
     "eslint": "7.31.0",

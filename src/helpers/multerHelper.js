@@ -1,7 +1,25 @@
 import multer from "multer"
-import { GeneralError } from "./errors";
+import sftpStorage from 'multer-sftp'
 
-export const imageUpload = multer({
+var storage = sftpStorage({
+    sftp: {
+        host: process.env.FTP_HOST,
+        port: process.env.FTP_PORT || 22,
+        username: process.env.FTP_USER,
+        password: process.env.FTP_PASSWORD
+    },
+    destination: function (req, file, cb) {
+        //process.env.image_upload_path
+        cb(null, '/home/jesustsd/tmp/upload_api/imagens')
+    },
+    filename: function (req, file, cb) {
+        cb(null, '' + Date.now() + file.originalname.slice(-4))
+    },
+})
+
+export const imageUpload = multer({storage})
+
+/*export const imageUpload = multer({
     storage: multer.diskStorage({
         destination: function (req, file, cb) {
             cb(null, './public/imagens')
@@ -21,32 +39,15 @@ export const imageUpload = multer({
     limits: {
         fileSize: 1850000
     }
-})
+})*/
 
 export function deleteFile(path) {
 
-    if(!path) return;
-    
+    if (!path) return;
+
     var fs = require('fs');
 
     fs.unlink(path, function (err) {
         console.log(err);
     });
 }
-
-
-//var sftpStorage = require('multer-sftp');
-/*var storage = sftpStorage({
-  sftp: {
-    host: process.env.FTP_HOST,
-    port: process.env.FTP_PORT,
-    username: process.env.FTP_USER,
-    password: process.env.FTP_PASSWORD
-  },
-  destination: function (req, file, cb) {
-    cb(null, './public/imagens')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now())
-  }
-})*/
