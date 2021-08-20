@@ -1,6 +1,8 @@
 import multer from "multer"
 import sftpStorage from 'multer-sftp'
 
+import {BadRequest} from './errors'
+
 var storage = sftpStorage({
     sftp: {
         host: process.env.FTP_HOST,
@@ -24,7 +26,7 @@ export const imageUpload = multer({
         if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
             return cb(null, true);
 
-        cb(new GeneralError('Esse tipo de ficheiro não é permitido.', 62));
+        cb(new BadRequest('Esse tipo de ficheiro não é permitido.', 62));
 
     },
     limits: {
