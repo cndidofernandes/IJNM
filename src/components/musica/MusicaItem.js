@@ -7,6 +7,7 @@ import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import AspectRatio from "../shared/AspectRatio";
 import dateToString from "../../helpers/dateToString";
 import { makeStyles } from '@material-ui/styles';
+import PanelItem from "../shared/PanelItem";
 
 const useStyle = makeStyles(theme => ({
   playButton: {
@@ -25,9 +26,13 @@ const useStyle = makeStyles(theme => ({
 
 
 
-export default function MusicaItem({ musica }) {
+export default function MusicaItem({ musica, onDeleteClick, ...rest }) {
 
+  const [hideImage, setHideImage] = React.useState(1);
   const classes = useStyle();
+  const onLoadImageFail = ()=>{
+    setHideImage(0);
+  }
 
 
   if (!musica) {
@@ -36,10 +41,10 @@ export default function MusicaItem({ musica }) {
 
 
   return (
-    <Box>
+    <Box {...rest}>
       <Box borderRadius={4} position='relative' component={Link} target="_blank" rel="noreferrer" underline="none" href={musica.linkDaMusica}>
         <AspectRatio width='100%' aspectRatio={1} mb={2} bgcolor='#2e2e2e' position='relative' >
-          <CardMedia className={classes.cover} image={musica.capaUrl} title={musica.titulo} component={'img'} />
+          <CardMedia className={classes.cover} image={process.env.IMAGE_BASE_URL+'/'+musica.capaUrl} title={musica.titulo} component={'img'} onError={onLoadImageFail} style={{opacity: hideImage}}/>
 
           <Box borderRadius={2.5} style={{ background: 'linear-gradient(45deg, #212121, transparent)', width: "100%", height: "100%", }} color='#fff' position='absolute' top={0} left={0} p={2} display='flex' alignItems={'center'} >
             <div>
@@ -65,6 +70,12 @@ export default function MusicaItem({ musica }) {
 
       </Box>
 
+      {
+          
+          onDeleteClick &&(
+            <PanelItem mt={-2} onDeleteClick={onDeleteClick}/>
+            )
+        }
 
     </Box>
   )

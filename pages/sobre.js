@@ -7,6 +7,8 @@ import { Hidden } from "@material-ui/core";
 
 import Slide from 'react-reveal/Slide';
 
+import Head from 'next/head'
+
 export default function Sobre(props) {
 
 	React.useEffect(() => {
@@ -15,6 +17,10 @@ export default function Sobre(props) {
 
 	return (
 		<>
+			<Head>
+				<title>Nossa História</title>
+				<meta name="description" content='Conheça mais sobre a história da igreja jesus nosso modelo' />
+			</Head>
 			<Container>
 				<Box my={4}
 					sx={{

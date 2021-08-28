@@ -1,6 +1,9 @@
 module.exports = {
   reactStrictMode: false,
   images: {
-    domains: ['localhost'],
+    domains: ['www.jesusnossomodelo.ao'],
   },
+  env: {
+    IMAGE_BASE_URL: 'https://www.jesusnossomodelo.ao/upload_files/imagens'
+  }
 }

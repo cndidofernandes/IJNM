@@ -20,13 +20,13 @@ import { makeStyles } from '@material-ui/core';
 const useStyle = makeStyles(theme => ({
     socialIcons: {
         fontSize: 40,
-        color: '#fff',
+        color: '#000',
         textAlign: 'center',
     },
     icons: {
         fontSize: 24,
         marginBottom: 4,
-        color: '#fff',
+        color: '#000',
         textAlign: 'center',
     },
     buttonSytle: {
@@ -38,7 +38,7 @@ const useStyle = makeStyles(theme => ({
         color: theme.palette.text.secondary,
     },
     text: {
-        color: '#fff',
+        // color: '#fff',
         textAlign: 'center',
         fontWeight: 500
     }
@@ -49,8 +49,10 @@ function Footer() {
     const router = useRouter();
     const classes = useStyle();
     return (
-        <Box display='flex' px={2} flexDirection='column' alignItems='center' justifyContent='center' minHeight='90vh' bgcolor='#2e2e2e' py={2} mt={5}>
-
+        <>
+        <Divider variant='middle'/>
+        <Box display='flex' px={2} flexDirection='column' alignItems='center' justifyContent='center' minHeight='90vh' bgcolor='#fff' py={2} mt={5}>
+            
             <Grid container spacing={2} justifyContent='space-between'>
                 <Grid item xs={12} sm={3} md={4}>
                     <Box my={2} display='flex' flexDirection='column' alignItems='center' justifyContent='center' >
@@ -92,12 +94,13 @@ function Footer() {
 
             </Box >
 
-            <Box mb={1} p={2} px={3} color='#fff' component='span' fontSize='subtitle2.fontSize' fontWeight='fontWeightBold' textAlign='center'>
-                Jesus Cristo Nosso Modelo © 2021
+            <Box mb={1} p={2} px={3} component='span' fontSize='subtitle2.fontSize' fontWeight='fontWeightBold' textAlign='center'>
+                Jesus Nosso Modelo © 2021
             </Box>
             <Typography variant='caption' className={classes.text} style={{fontWeight: 400, paddingBottom: 4}}>Todos os direitos reservados</Typography>
 
         </Box>
+        </>
     );
 }
 

@@ -1,17 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import Head from 'next/head'
-import GaleriaItem from "../../src/components/media/GaleriaItem";
+import GaleriaItem from "../src/components/media/GaleriaItem";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Hidden from "@material-ui/core/Hidden";
-import SearchBox from "../../src/components/shared/SearchBox";
+import SearchBox from "../src/components/shared/SearchBox";
 
-import api from '../../src/services/api';
-import { getErrorBackend } from "../../src/helpers/errors";
+import api from '../src/services/api';
+import { getErrorBackend } from "../src/helpers/errors";
 import { Button } from "@material-ui/core";
 
-import mysqldb from "../../src/services/mysqldb";
+import mysqldb from "../src/services/mysqldb";
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -118,6 +118,7 @@ export default function MediaPage(props) {
 						</Hidden>
 						<form onSubmit={onSearchBoxSubmitting}>
 							<SearchBox
+								disabled={backend.loading && !backend?.data.listEventosWithMedia.length}
 								inputProps={{
 									onChange: (e) => {
 										setSearchBoxText(e.target.value)
@@ -207,7 +208,7 @@ export async function getStaticProps() {
 				listEventosWithMedia
 			}
 		},
-		//revalidate: 60 * 60 * 15
+		revalidate: 60 * 60 * 15
 	}
 
 }

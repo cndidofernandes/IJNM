@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Box from "@material-ui/core/Box";
-
+import Container from "@material-ui/core/Container";
 import Head from 'next/head'
 
 import EventSection from "../src/components/home/EventSection";
@@ -106,7 +106,7 @@ export default function Home({ setTabSelectedIndex, events }) {
 	})
 
 	React.useEffect(() => {
-		setTabSelectedIndex(5);
+		setTabSelectedIndex(-1);
 	}, []);
 
 	return (
@@ -120,7 +120,7 @@ export default function Home({ setTabSelectedIndex, events }) {
 				<Slide bottom cascade>
 					<Box>
 						<Box p={1} pb={0} px={2} color='#fff' fontWeight='bold' fontSize={isMobile ? 'h3.fontSize' : 'h1.fontSize'} textAlign='center'>
-							Igreja Jesus Nosso Modelo
+							Jesus Nosso Modelo
 						</Box>
 						<Box p={1} pt={0} color='#fff' textAlign='center' fontSize={isMobile ? 'subtitle1.fontSize' : 'h4.fontSize'}>
 							Catedral de milagres
@@ -133,10 +133,11 @@ export default function Home({ setTabSelectedIndex, events }) {
 			<div>
 
 				<Box display='flex' flexDirection='column' justifyContent='center' height={isMobile ? '70vh' : '90vh'} bgcolor='#fafafa'>
-
-					<Box px={2} fontSize={isMobile ? 'body1.fontSize' : 'h3.fontSize'} sx={{ textAlign: 'center', fontWeight: 'regular', fontStyle: 'italic' }}>
-						{'"Curai os enfermos, limpai os leprosos, ressuscitai os mortos, expulsai os demônios; de graça recebestes, de graça dai."'}
-					</Box>
+					<Container>
+						<Box px={2} fontSize={isMobile ? 'body1.fontSize' : 'h3.fontSize'} sx={{ textAlign: 'center', fontWeight: 'regular', fontStyle: 'italic' }}>
+							{'"Curai os enfermos, limpai os leprosos, ressuscitai os mortos, expulsai os demônios; de graça recebestes, de graça dai."'}
+						</Box>
+					</Container>
 
 					<Slide bottom>
 						<Box mt={1.5} textAlign='center'>
@@ -212,22 +213,26 @@ export default function Home({ setTabSelectedIndex, events }) {
 
 
 			<EventSection events={events} isMobile={isMobile} />
+			
 			<Box textAlign='center' minHeight='80vh' display='flex' flexDirection='column' justifyContent='center'>
-				<Box mb={1.5} fontWeight='fontWeightBold' fontSize={isMobile ? 'h3.fontSize' : 'h1.fontSize'}>
-					Encontre-nos aqui
-				</Box>
-				<Box mb={5.5} fontSize='body1.fontSize' color='text.secondary'>
-					Estamos localizados no Bairro Tchioco, rua direita do Estádio Tundavala depois da Verdinha
-				</Box>
-				<Box width='fit-content' mx={'auto'} >
-					<iframe
-						height="450"
-						style={{border: 0, width:"calc(100vw - 64px)", maxWidth:1000, margin: 0, padding: 0}}
-						loading="lazy"
-						allowFullScreen
-						src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC1FgccWPLpjG5SLlE0DQiySCAUlwI4I-M&q=IGREJA+JESUS+NOSSO+MODELO">
-					</iframe>
-				</Box>
+				<Slide bottom>
+					<Box mb={1.5} fontWeight='fontWeightBold' fontSize={isMobile ? 'h3.fontSize' : 'h1.fontSize'}>
+						Encontre-nos aqui
+					</Box>
+					<Box mb={5.5} fontSize='body1.fontSize' color='text.secondary'>
+						Estamos localizados no Bairro Tchioco, rua direita do Estádio Tundavala depois da Verdinha
+					</Box>
+
+					<Box width='fit-content' mx={'auto'} >
+						<iframe
+							height="450"
+							style={{ border: 0, width: "calc(100vw - 64px)", maxWidth: 1000, margin: 0, padding: 0 }}
+							loading="lazy"
+							allowFullScreen
+							src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC1FgccWPLpjG5SLlE0DQiySCAUlwI4I-M&q=IGREJA+JESUS+NOSSO+MODELO">
+						</iframe>
+					</Box>
+				</Slide>
 			</Box>
 
 

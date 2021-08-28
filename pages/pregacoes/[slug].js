@@ -120,6 +120,7 @@ export async function getStaticProps({ params }) {
             data: {
                 ...rows[0],
             }
-        }
+        },
+        revalidate: 60 * 15
     }
 }

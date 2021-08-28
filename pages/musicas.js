@@ -5,24 +5,37 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Hidden from "@material-ui/core/Hidden";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import MyFab from "../src/components/shared/Fab";
 
-import api from '../src/services/api';
+import api from "../src/services/api";
 
-import FormDialog from "../src/components/FormDialog";
+import FormDialog from "../src/components/musica/form_dialog";
 
-import { AuthContext } from '../src/contexts/AuthContext';
+import { AuthContext } from "../src/contexts/AuthContext";
 import { getErrorBackend } from "../src/helpers/errors";
 import { Button } from "@material-ui/core";
 
 import mysqldb from "../src/services/mysqldb";
 import Head from "next/head";
+import DeleteItemDialog from "../src/components/shared/DeleteItemDialog";
+
+import Typography from "@material-ui/core/Typography";
+
+import { makeStyles } from "@material-ui/styles";
+
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const pageSize = 7;
 
-function Content({ backend }) {
+const useStyle = makeStyles((theme) => ({
+	fab: {
+		marginTop: theme.spacing(3),
+	},
+}));
+
+function Content({ backend, onDeleteClick, isAuthenticated }) {
 
 	if (backend.loading && !backend?.data.listMusicas.length) {
 		return (
@@ -49,15 +62,23 @@ function Content({ backend }) {
 
 	return backend?.data.listMusicas && backend?.data.listMusicas.map((musica, key) => (
 		<Grid key={key} item xs={12} sm={6} md={4} lg={3}>
-			<MusicaItem musica={musica} />
+			<MusicaItem
+				musica={musica}
+				onDeleteClick={isAuthenticated ? onDeleteClick(musica) : undefined}
+			/>
 		</Grid>
 	))
 
 }
 
 export default function Musica(props) {
+	const classes = useStyle();
+
+	const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
+
 	const { isAuthenticated } = useContext(AuthContext);
 	const [openFormDialog, setOpenFormDialog] = useState(false);
+	const [itemToDelete, setItemToDelete] = useState(null);
 
 	const [backend, setBackend] = useState({
 		loading: false,
@@ -137,6 +158,33 @@ export default function Musica(props) {
 		props.setTabSelectedIndex(2);
 	}, [])
 
+	const handleCreatedItem = (itemCreated) => {
+
+		loadMusicasFromApi({
+			title: itemCreated.titulo,
+			pageSize: 1
+		})
+
+	};
+
+	const handleDeleteClick = (item) => () => {
+		setItemToDelete(item);
+	};
+	const handleDeleteClose = (item) => {
+		setItemToDelete(null);
+	};
+	const handleDeletedItem = (deletedItem) => {
+		setBackend({
+			...backend,
+			data: {
+				...backend.data,
+				listMusicas: backend.data.listMusicas.filter(
+					(item) => deletedItem.id !== item.id
+				),
+			},
+		});
+	};
+
 	return (
 		<Box minHeight={'70vh'}>
 			<Head>
@@ -157,6 +205,7 @@ export default function Musica(props) {
 						</Hidden>
 						<form onSubmit={onSearchBoxSubmitting}>
 							<SearchBox
+								disabled={backend.loading && !backend?.data.listMusicas.length}
 								inputProps={{
 									onChange: (e) => {
 										setSearchBoxText(e.target.value)
@@ -172,7 +221,7 @@ export default function Musica(props) {
 				</Grid>
 				<Box mt={4} />
 				<Grid container spacing={4}>
-					<Content backend={backend} />
+					<Content backend={backend} onDeleteClick={handleDeleteClick} isAuthenticated={isAuthenticated} />
 				</Grid>
 				{backend?.data?.hasMore &&
 					<Box textAlign='center' mt={2.5}>
@@ -186,22 +235,45 @@ export default function Musica(props) {
 						}
 					</Box>
 				}
-				{isAuthenticated &&
-					(
-						<>
-							<MyFab style={{ float: 'right', marginTop: 8 * 3 }} text='Publicar música' onClick={() => { setOpenFormDialog(true) }} />
-							<FormDialog
-								open={openFormDialog}
-								onClose={() => { setOpenFormDialog(false) }}
-								title='Publicar música'
-								apiUrl='/music'
-								fields={[
-									{ type: 'text', label: 'Titulo', name: 'titulo', placeholder: 'Digite o titulo da música' },
-									{ type: 'url', label: 'Link', name: 'linkDaMusica', placeholder: 'Cole aqui o link da música' },
-								]} />
-						</>
-					)
-				}
+				{isAuthenticated && (
+					<>
+						<Box position='fixed' bottom={isMobile ? 8*3 : 8*6} right={isMobile ? 8*3 : 8*6}>
+							<MyFab
+								className={classes.fab}
+								text="Publicar música"
+								onClick={() => {
+									setOpenFormDialog(true);
+								}}
+							/>
+						</Box>
+						<FormDialog
+							open={openFormDialog}
+							onSucess={handleCreatedItem}
+							onClose={() => { setOpenFormDialog(false) }}
+							title='Publicar música'
+							apiUrl='/music'
+							fields={{
+								titulo: { type: 'text', label: 'Titulo', name: 'titulo', placeholder: 'Escreva titulo da música' },
+								artista: { type: 'text', label: 'Titulo', name: 'artista', placeholder: 'Escreva o autor da música' },
+								linkDaMusica: { type: 'url', label: 'Link', name: 'linkDaMusica', placeholder: 'Cole aqui o link da música' },
+							}} />
+
+						{/*Todo: apagar todas as imagens do evento*/}
+						<DeleteItemDialog
+							item={itemToDelete}
+							title='Apagar esta música?'
+							apiUrl='/music'
+							onClose={handleDeleteClose}
+							onSucess={handleDeletedItem}
+						>
+							<Typography variant="body2" color='textSecondary' gutterBottom>
+								As pessoas não poderão mais ver esta música. Esta operação é
+								irreversível
+							</Typography>
+							<MusicaItem musica={itemToDelete} mt={2} mb={2} />
+						</DeleteItemDialog>
+					</>
+				)}
 				<Box mb={4} />
 			</Container>
 		</Box>
@@ -221,7 +293,8 @@ export async function getStaticProps() {
 				hasMore: listMusicas.length >= pageSize,
 				listMusicas
 			}
-		}
+		},
+		revalidate: 60 * 60 * 24
 	}
 
 }

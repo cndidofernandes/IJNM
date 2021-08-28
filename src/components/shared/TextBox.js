@@ -10,7 +10,7 @@ export default function TextBox({ placeholder, endIcon, inputProps, ...rest }) {
 			<InputBase
 				style={{
 					flexGrow: 1,
-					width: '100%',
+					width: '80%',
 					paddingLeft: 0,
 					paddingRight: 8,
 				}}

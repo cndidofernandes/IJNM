@@ -1,10 +1,7 @@
 import React from "react";
 
-import ReactPlayer from 'react-player'
-
 import { useRouter } from "next/router";
 import Box from "@material-ui/core/Box";
-import Dialog from '@material-ui/core/Dialog'
 import { makeStyles } from "@material-ui/styles";
 
 import CardMedia from "@material-ui/core/CardMedia";
@@ -12,10 +9,9 @@ import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 
 import AspectRatio from "../shared/AspectRatio";
 
-import Grid from "@material-ui/core/Grid";
-
 import dateToString from "../../helpers/dateToString";
 import { CardActionArea } from "@material-ui/core";
+import PanelItem from "../shared/PanelItem";
 
 const useStyle = makeStyles(theme => ({
   playButton: {
@@ -49,21 +45,25 @@ const useStyle = makeStyles(theme => ({
 
 
 
-export default function PregacaoItem({ pregacao }) {
+export default function PregacaoItem({ pregacao, showPregacaoDetail, onDeleteClick, ...rest  }) {
   const classes = useStyle();
 
   const router = useRouter();
-
+  const [hideImage, setHideImage] = React.useState(1);
+  const onLoadImageFail = ()=>{
+    setHideImage(0);
+  }
   if (!pregacao) {
     return (<>Dados Corrompidos</>);
   }
 
   return (
-    <CardActionArea onClick={() => router.push(`/pregacoes/${pregacao.slug}`)}>
+    <Box {...rest}>
+      <CardActionArea onClick={() => router.push(`/pregacoes/${pregacao.slug}`)}>
       <Box>
         <Box position='relative'>
           <AspectRatio width='100%' aspectRatio={1} mb={1} bgcolor='text.secondary' position='relative'>
-            <CardMedia className={classes.cover} image={pregacao.capaUrl} title={pregacao.tema} component={'img'} />
+            <CardMedia className={classes.cover} image={process.env.IMAGE_BASE_URL+'/'+pregacao.capaUrl} title={pregacao.tema} component={'img'}  onError={onLoadImageFail} style={{opacity: hideImage}}/>
             <PlayArrowRoundedIcon className={classes.playButton} fontSize='inherit' />
           </AspectRatio>
         </Box>
@@ -76,11 +76,19 @@ export default function PregacaoItem({ pregacao }) {
           {pregacao.pregador}
         </Box>
 
-        <Box fontSize='caption.fontSize' color='text.secondary'>
+        <Box fontSize='caption.fontSize' color='text.secondary' mb={1}>
           {dateToString('d/M/Y', pregacao.data)}
         </Box>
 
       </Box>
-    </CardActionArea>
+      </CardActionArea>
+       {
+        
+        onDeleteClick &&(
+          <PanelItem onDeleteClick={onDeleteClick}/>
+          )
+      }
+    </Box>
+    
   )
 }

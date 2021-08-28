@@ -31,7 +31,7 @@ export default function GaleriaItem({ actividade, ...rest }) {
         <Box bgcolor='#fff' border='1px solid #f3f3f3' borderRadius={8} width='100%' height='100%'>
           <Box position='relative' component={Link} underline="none" href={actividade.linkDoVideo}>
             <AspectRatio width='100%' aspectRatio={1} mb={2} bgcolor='#fafafa' position='relative'>
-              <CardMedia style={{ height: 194, }} image={actividade.capaUrl} title={actividade.tema} component={'img'} />
+              <CardMedia style={{ height: 194, }} image={`${process.env.IMAGE_BASE_URL}/${actividade.capaUrl}`} title={actividade.tema} component={'img'} />
             </AspectRatio>
           </Box>
 

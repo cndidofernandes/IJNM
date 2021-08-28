@@ -27,20 +27,20 @@ export default function BankInfo() {
 								Associação Jesus Cristo Vive
 							</Box>
 						</Box>
-						<Box display='flex' alignItems='center' mt={2}>
+						<Box display='flex' alignItems='flex-start' mt={2}>
+							<Box fontWeight="fontWeightBold">
+								Banco Atlântico:
+							</Box>
+							<Box fontSize='body2.fontSize' color='text.secondary' ml={2} >
+								12314495310001
+							</Box>
+						</Box>
+						<Box display='flex' alignItems='center' mt={2} mb={2}>
 							<Box fontWeight="fontWeightBold">
 								IBAN:
 							</Box>
 							<Box fontSize='body2.fontSize' color='text.secondary' ml={2}>
-								AO06.0010.0401.0305.1938.0116.7
-							</Box>
-						</Box>
-						<Box display='flex' alignItems='flex-start' mt={2}>
-							<Box fontWeight="fontWeightBold">
-								BPC
-							</Box>
-							<Box fontSize='body2.fontSize' color='text.secondary' ml={2} mb={2} >
-								0401-U519-38011
+								AO06.0055.0000.2314.4953.1016.6
 							</Box>
 						</Box>
 					</Grid>

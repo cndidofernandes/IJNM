@@ -1,9 +1,13 @@
 import mysqlDB from '../../src/services/mysqldb';
 import registerPubRequestDB from '../../src/helpers/handlePubRequest';
-import { NotFound } from '../../src/helpers/errors';
+import { BadRequest, NotFound } from '../../src/helpers/errors';
 
 import bodyParser from 'body-parser';
 import dateToString from '../../src/helpers/dateToString';
+
+import deleteFiles from "../../src/helpers/deleteFiles";
+
+import { checkAuthToken, checkAdminAuthorization } from '../../src/helpers/auth'
 
 export const config = {
     api: {
@@ -16,21 +20,20 @@ export default registerPubRequestDB(
     'pregacao',
     ['tema', 'pregador', 'breveDescricao', 'linkDoVideo', 'data', 'slug'],
     'Pregação publicada com sucesso no site.',
-    "Ocorreu um erro desconhecido ao publicar essa pregação no site.",
-    'tema'
+    "Ocorreu um erro desconhecido ao publicar essa pregação no site."
 ).get(bodyParser.json(), async (req, res, next) => {
 
-    if(!req.query.offsetDate) req.query.offsetDate = dateToString('Y-M-d h:i:00');
-    if(!req.query.pageSize) req.query.pageSize = 3;
+    if (!req.query.offsetDate) req.query.offsetDate = dateToString('Y-M-d h:i:00');
+    if (!req.query.pageSize) req.query.pageSize = 3;
 
 
     const pageSize = mysqlDB.escape(Number(req.query.pageSize))
 
     let SQL = `SELECT * FROM pregacao WHERE criadoEM < '${req.query.offsetDate}' ORDER BY id DESC LIMIT ${pageSize}`;
 
-    if(req.query.topic) SQL = `SELECT * FROM pregacao WHERE tema LIKE '${req.query.topic}%' LIMIT 0,${pageSize}`;
+    if (req.query.topic) SQL = `SELECT * FROM pregacao WHERE tema LIKE '${req.query.topic}%' LIMIT 0,${pageSize}`;
 
-    try{
+    try {
         const rows = await mysqlDB.query(SQL);
 
         if (!rows.length) throw new NotFound('Ainda não temos pregações para poderes assistir.', 44);
@@ -43,8 +46,35 @@ export default registerPubRequestDB(
             }
         })
 
-    }catch(error){
+    } catch (error) {
         next(error);
     }
 
-});;
+}).delete(checkAuthToken, checkAdminAuthorization, async (req, res, next) => {
+
+    if (!req.query.id && !req.query.slug){
+        next(new BadRequest('Querys id or slug are required', 40));
+        return;
+    }
+
+    //Apagar foto
+    await deleteFiles({
+        files: [req.query.capaUrl],
+        callback: async () => {
+            //Apagar registo
+            const SQL = `DELETE FROM pregacao WHERE ${req.query.id ? 'id' : 'slug'} = ?`;
+
+            try {
+                const rows = await mysqlDB.query(SQL, [req.query.id || req.query.slug]);
+
+                if (!rows.affectedRows) throw new NotFound('Pregação não encontrada. Já deve ter sido apagada', 44);
+
+                res.status(200).json({ success: { message: 'Pregação apagada com sucesso.', data: null } })
+
+            } catch (error) {
+                next(error);
+            }
+        }
+    })
+
+})

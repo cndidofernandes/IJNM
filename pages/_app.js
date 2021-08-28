@@ -19,8 +19,8 @@ const Layout = ({ children, appbarSettings, tabSelectedIndex }) => {
   return (
     <>
       {isAuthenticated &&
-        <Box p={2} bgcolor='secondary.main'>
-          Início de sessão como Administrador feita com sucesso!
+        <Box p={2} bgcolor='primary.main' color='#fff'>
+          Seja bem-vindo! Você está a ver o site como administrador
         </Box>
       }
       <TopAppbar config={appbarSettings} value={tabSelectedIndex} />

@@ -3,13 +3,13 @@ import Button from '@material-ui/core/Button';
 import Router from 'next/router'
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import api from '../src/services/api';
-import { AuthContext } from '../src/contexts/AuthContext';
-import { getError } from '../src/helpers/errors';
+import api from '../../src/services/api';
+import { AuthContext } from '../../src/contexts/AuthContext';
+import { getErrorBackend } from '../../src/helpers/errors';
 
-import ResponseTip from '../src/components/shared/ResponseTip';
+import ResponseTip from '../../src/components/shared/ResponseTip';
 
-function Admin() {
+function Admin({setTabSelectedIndex}) {
     const { authenticateAdmin, isAuthenticated } = useContext(AuthContext);
     const { register, handleSubmit } = useForm();
 
@@ -20,8 +20,14 @@ function Admin() {
     });
 
     useEffect(() => {
-        if (isAuthenticated) Router.push('/')
-    }, [0])
+
+        if (isAuthenticated) {
+            Router.push('/')
+        }
+
+        setTabSelectedIndex(-1);
+        
+    }, [isAuthenticated])
 
     const myHandleSubmitting = async (data) => {
 
@@ -40,7 +46,7 @@ function Admin() {
 
             setBackend({
                 data: null,
-                error: getError(error, {
+                error: getErrorBackend(error, {
                     '404': 'O nome do usúario ou palavra-passe estão incorrentos.'
                 }),
                 loading: false
@@ -50,9 +56,10 @@ function Admin() {
 
     }
 
+
     return (
-        <Box sx={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <Box m={4} fontSize='h3.fontSize' fontWeight='medium'>Acessar com Administrador</Box>
+        <Box sx={{ width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Box m={4} fontSize='h3.fontSize' fontWeight='medium' textAlign='center'>Acessar com Administrador</Box>
             <form onSubmit={handleSubmit(myHandleSubmitting)} style={{ width: '40%' }}>
                 <TextField fullWidth size='small' label='Nome do usuario' placeholder='Usuario' inputProps={{ required: true, ...register('user') }} />
                 <br />

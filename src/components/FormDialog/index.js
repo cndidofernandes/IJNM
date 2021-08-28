@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import FormData from 'form-data';
 import { useState, useRef } from 'react';
 
-import { getError } from '../../helpers/errors';
+import { getErrorBackend } from '../../helpers/errors';
 
 import ResponseTip from '../shared/ResponseTip';
 
@@ -56,11 +56,19 @@ function FormDialog({ open, onClose, title, apiUrl, fields = [] }) {
 
             formRef.current.reset();
 
+            setTimeout(() => {
+				setBackend({
+					loading: false,
+					data: null,
+					error: null
+				})
+			}, 10000);
+
         } catch (error) {
 
             setBackend({
                 data: null,
-                error: getError(error, {
+                error: getErrorBackend(error, {
                     '400': "Ocorreu um erro ao publicar a música no site.",
                     '500': "Algo de estranho aconteceu ao publicar a música no site. Por favor, tente novamente.",
                 }),

@@ -22,11 +22,14 @@ export default function EventSection(props) {
 					<Content events={props.events} />
 				</Grid>
 
-				<Box textAlign='center' mt={props?.events?.length ? 2 : 4.5}>
-					<Button endIcon={<ArrowForwardRoundedIcon />} color='primary' size="large" component={'a'} href='/eventos' variant='contained' style={{ border: 'none', boxShadow: 'none' }}>
-						Ver mais
-					</Button>
-				</Box>
+
+				{props?.events?.length &&
+					<Box textAlign='center' mt={props?.events?.length ? 2 : 4.5}>
+						<Button endIcon={<ArrowForwardRoundedIcon />} color='primary' size="large" component={'a'} href='/eventos' variant='contained' style={{ border: 'none', boxShadow: 'none' }}>
+							Ver mais
+						</Button>
+					</Box>
+				}
 			</Slide>
 
 		</Box >

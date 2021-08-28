@@ -11,7 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MyFab from "../../src/components/shared/Fab";
 
-import FormDialog from "../../src/components/FormDialog";
+import FormDialog from "../../src/components/pregacao/form_dialog";
 
 import { AuthContext } from '../../src/contexts/AuthContext';
 import { getErrorBackend } from "../../src/helpers/errors";
@@ -19,13 +19,32 @@ import { getErrorBackend } from "../../src/helpers/errors";
 import api from '../../src/services/api';
 import { Button } from "@material-ui/core";
 
+import DeleteItemDialog from "../../src/components/shared/DeleteItemDialog";
+import { makeStyles } from "@material-ui/styles";
+
 import mysqldb from "../../src/services/mysqldb";
+
+import Typography from "@material-ui/core/Typography";
+
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+import Head from 'next/head'
 
 const pageSize = 7;
 
-export default function PregacaoPage(props) {
+const useStyle = makeStyles((theme) => ({
+	fab: {
+		marginTop: theme.spacing(3),
+	},
+}));
 
+export default function PregacaoPage(props) {
 	const { isAuthenticated } = useContext(AuthContext);
+
+	const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
+
+	const [itemToDelete, setItemToDelete] = useState(null);
+	const classes = useStyle();
 
 	const [openFormDialog, setOpenFormDialog] = useState(false);
 
@@ -107,8 +126,42 @@ export default function PregacaoPage(props) {
 		props.setTabSelectedIndex(1);
 	}, [])
 
+	const handleCreatedItem = (itemCreated) => {
+		/*setBackend({
+			...backend,
+			data: {
+				...backend.data,
+				listPregacoes: [...backend.data.listPregacoes, itemCreated]
+			},
+		});*/
+	};
+
+	const handleDeleteClick = (item) => () => {
+		setItemToDelete(item);
+	};
+
+	const handleDeleteClose = (item) => {
+		setItemToDelete(null);
+	};
+
+	const handleDeletedItem = (deletedItem) => {
+		setBackend({
+			...backend,
+			data: {
+				...backend.data,
+				listPregacoes: backend.data.listPregacoes.filter(
+					(item) => deletedItem.slug !== item.slug
+				),
+			},
+		});
+	};
+
 	return (
 		<Box minHeight='70vh'>
+			<Head>
+				<title>Assistir pregações</title>
+				<meta name="description" content='Pregações, seremos, reflexões sobre a palavra de Deus' />
+			</Head>
 			<Container>
 				<Box mt={5} />
 				<Grid container justifyContent='space-between' alignItems='center'>
@@ -123,6 +176,7 @@ export default function PregacaoPage(props) {
 						</Hidden>
 						<form onSubmit={onSearchBoxSubmitting}>
 							<SearchBox
+								disabled={backend.loading && !backend?.data.listPregacoes.length}
 								inputProps={{
 									onChange: (e) => {
 										setSearchBoxText(e.target.value)
@@ -139,7 +193,7 @@ export default function PregacaoPage(props) {
 				<Box mt={4} />
 
 				<Grid container spacing={4}>
-					<Content backend={backend} />
+					<Content backend={backend} handleDeleteClick={handleDeleteClick} isAuthenticated={isAuthenticated} />
 				</Grid>
 
 				{backend?.data?.hasMore &&
@@ -155,25 +209,79 @@ export default function PregacaoPage(props) {
 					</Box>
 				}
 
-				{isAuthenticated &&
-					(
-						<>
-							<MyFab style={{ float: 'right', marginTop: 8 * 3 }} text='Publicar pregação' onClick={() => { setOpenFormDialog(true) }} />
-							<FormDialog
-								open={openFormDialog}
-								onClose={() => { setOpenFormDialog(false) }}
-								title='Publicar música'
-								apiUrl='/sermons'
-								fields={[
-									{ type: 'text', label: 'Tema', name: 'tema', placeholder: 'Escreva o tema da pregação' },
-									{ type: 'text', label: 'Pregador', name: 'pregador', placeholder: 'Escreva o nome do pregador' },
-									{ type: 'text', label: 'Descrição', name: 'breveDescricao', placeholder: 'Em poucas palavras descreva a pregração' },
-									{ type: 'url', label: 'Link Do Video', name: 'linkDoVideo', placeholder: 'Cole aqui o link da pregação' },
-									{ type: 'date', label: 'Data', name: 'data', placeholder: 'Insira a data que a pregação foi feita' },
-								]} />
-						</>
-					)
-				}
+				{isAuthenticated && (
+					<>
+						<Box position='fixed' bottom={isMobile ? 8 * 3 : 8 * 6} right={isMobile ? 8 * 3 : 8 * 6}>
+							<MyFab
+								className={classes.fab}
+								text="Publicar pregação"
+								onClick={() => {
+									setOpenFormDialog(true);
+								}}
+							/>
+						</Box>
+						<FormDialog
+							open={openFormDialog}
+							onClose={() => {
+								setOpenFormDialog(false);
+							}}
+							onSucess={handleCreatedItem}
+							title="Adicionar uma pregação"
+							apiUrl="/sermons"
+							fields={{
+								tema: {
+									type: "text",
+									label: "Tema",
+									name: "tema",
+									placeholder: "Escreva o tema da pregação",
+								},
+								pregador: {
+									type: "text",
+									label: "Pregador",
+									name: "pregador",
+									placeholder: "Nome do pregador",
+								},
+								data: {
+									type: "datetime-local",
+									label: "Data",
+									name: "data",
+									placeholder: "dd/mm/aaaa",
+								},
+								breveDescricao: {
+									type: "text",
+									label: "Descrição",
+									name: "breveDescricao",
+									placeholder: "Em poucas palavras descreva a pregração",
+								},
+								linkDoVideo: {
+									type: 'url',
+									label: "Link Do Video",
+									name: "linkDoVideo",
+									placeholder: "Cole aqui o link da pregação",
+								},
+							}}
+						/>
+
+						<DeleteItemDialog
+							item={itemToDelete}
+							title="Apagar esta Pregação?"
+							apiUrl="/sermons"
+							onClose={handleDeleteClose}
+							onSucess={handleDeletedItem}
+						>
+							<Typography variant="body2" color='textSecondary' gutterBottom>
+								As pessoas não poderão mais ver esta pregação e
+								os items associados a ele. Esta operação é
+								irreversível!
+							</Typography>
+							<PregacaoItem
+								pregacao={itemToDelete}
+								mt={2}
+								mb={2}
+							/>
+						</DeleteItemDialog>
+					</>
+				)}
 				<Box mb={4} />
 			</Container>
 		</Box>
@@ -181,7 +289,7 @@ export default function PregacaoPage(props) {
 }
 
 
-function Content({ backend, showPregacaoDetail }) {
+function Content({ backend, handleDeleteClick, isAuthenticated }) {
 	if (backend.loading && !backend?.data.listPregacoes.length) {
 		return (
 			<Box width='100%' py={8} display='flex' alignItems='center' justifyContent='center'>
@@ -207,7 +315,7 @@ function Content({ backend, showPregacaoDetail }) {
 
 	return backend?.data.listPregacoes && backend?.data.listPregacoes.map((pregacao, key) => (
 		<Grid key={key} item xs={12} sm={6} md={4} lg={3}>
-			<PregacaoItem pregacao={pregacao} showPregacaoDetail={showPregacaoDetail} />
+			<PregacaoItem pregacao={pregacao} onDeleteClick={isAuthenticated ? handleDeleteClick(pregacao) : undefined} />
 		</Grid>
 	))
 
@@ -229,7 +337,8 @@ export async function getStaticProps() {
 				pageSize: 6,
 				listPregacoes
 			}
-		}
+		},
+		revalidate: 60 * 15
 	}
 
 }

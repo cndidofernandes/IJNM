@@ -1,5 +1,4 @@
 import { Box, Typography } from '@material-ui/core';
-import theme from '../../theme';
 
 function Input({ label, ...props }) {
   return (
@@ -14,7 +13,6 @@ function Input({ label, ...props }) {
             borderWidth: '0px',
             border: 'none',
             outline: 'none',
-            color: theme.palette.text.secondary,
             fontWeight: 'normal',
             fontSize: '14px',
             letterSpacing: '0.25px'

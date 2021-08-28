@@ -42,7 +42,6 @@ export default function TopTabs(props) {
   const router = useRouter();
 
   const handleClick=(route)=>()=>{
-
     router.push(route);
   }
 

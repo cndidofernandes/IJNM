@@ -14,7 +14,7 @@ import { Button } from "@material-ui/core";
 
 import MyFab from "../../src/components/shared/Fab";
 
-import FormDialog from "../../src/components/FormDialog";
+import FormDialog from "../../src/components/eventos/form_dialog";
 
 import mysqldb from "../../src/services/mysqldb";
 
@@ -22,10 +22,27 @@ import dateToString from "../../src/helpers/dateToString";
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import { makeStyles } from "@material-ui/styles";
+import DeleteItemDialog from "../../src/components/shared/DeleteItemDialog";
+import Typography from "@material-ui/core/Typography";
+
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+const useStyle = makeStyles((theme) => ({
+	fab: {
+		marginTop: theme.spacing(3),
+	},
+}));
+
 const pageSize = 7;
 
 export default function EventoPage(props) {
+	const classes = useStyle();
+
+	const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
+
 	const { isAuthenticated } = useContext(AuthContext);
+	const [itemToDelete, setItemToDelete] = useState(null);
 
 	const [backend, setBackend] = useState({
 		loading: false,
@@ -130,9 +147,28 @@ export default function EventoPage(props) {
 		props.setTabSelectedIndex(0);
 	}, []);
 
+	const handleDeleteClick = (item) => () => {
+		setItemToDelete(item);
+	};
+
+	const handleDeleteClose = (item) => {
+		setItemToDelete(null);
+	};
+
+	const handleDeletedItem = (deletedItem) => {
+		setBackend({
+			...backend,
+			data: {
+				...backend.data,
+				listEventos: backend.data.listEventos.filter(
+					(item) => deletedItem.id !== item.id
+				),
+			},
+		});
+	};
+
 
 	return (
-
 		<Box minHeight='70vh'>
 			<Container>
 				<Head>
@@ -152,6 +188,7 @@ export default function EventoPage(props) {
 						</Hidden>
 						<form onSubmit={onSearchBoxSubmitting}>
 							<SearchBox
+								disabled={backend.loading && !backend?.data.listEventos.length}
 								inputProps={{
 									onChange: (e) => {
 										setSearchBoxText(e.target.value)
@@ -177,7 +214,7 @@ export default function EventoPage(props) {
 				<Box mt={4}>
 
 					<Grid container spacing={4}>
-						<Content backend={backend} />
+						<Content backend={backend} isAuthenticated={isAuthenticated} handleDeleteClick={handleDeleteClick} />
 					</Grid>
 
 					{backend?.data?.hasMore &&
@@ -194,22 +231,86 @@ export default function EventoPage(props) {
 					}
 
 				</Box>
-				{isAuthenticated &&
-					(
-						<>
-							<MyFab style={{ float: 'right', marginTop: 8 * 3 }} text='Publicar música' onClick={() => { setOpenFormDialog(true) }} />
-							<FormDialog
-								open={openFormDialog}
-								onClose={() => { setOpenFormDialog(false) }}
-								title='Publicar música'
-								apiUrl='/music'
-								fields={[
-									{ type: 'text', label: 'Titulo', name: 'titulo', placeholder: 'Digite o titulo da música' },
-									{ type: 'url', label: 'Link', name: 'linkDaMusica', placeholder: 'Cole aqui o link da música' },
-								]} />
-						</>
-					)
-				}
+				{isAuthenticated && (
+					<>
+						<Box position='fixed' bottom={isMobile ? 8*3 : 8*6} right={isMobile ? 8*3 : 8*6}>
+							<MyFab
+								className={classes.fab}
+								text="Publicar evento"
+								onClick={() => {
+									setOpenFormDialog(true);
+								}}
+							/>
+						</Box>
+						<FormDialog
+							open={openFormDialog}
+							onClose={() => {
+								setOpenFormDialog(false);
+							}}
+							title="Adicionar um evento"
+							apiUrl="/event"
+							fields={{
+								nome: {
+									type: "text",
+									label: "Nome",
+									name: "nome",
+									placeholder: "Escreva tema do evento",
+								},
+								tipo: {
+									type: "text",
+									label: "Tipo",
+									name: "tipo",
+									placeholder: "Tipo",
+								},
+								descricao: {
+									type: "text",
+									label: "Descricao",
+									name: "descricao",
+									placeholder:
+										"Escreva a descrição do evento",
+								},
+								local: {
+									type: "text",
+									label: "Local",
+									name: "local",
+									placeholder: "Nome do local",
+								},
+								dataDeInicio: {
+									type: "datetime-local",
+									label: "Data de inicio",
+									name: "dataDeInicio",
+									placeholder: "dd/mm/aaaa",
+								},
+								dataDeTermino: {
+									type: "datetime-local",
+									label: "Data de Termino",
+									name: "dataDeTermino",
+									placeholder: "dd/mm/aaaa",
+								},
+							}}
+						/>
+
+						{/*Todo: apagar todas as imagens do evento*/}
+						<DeleteItemDialog
+							item={itemToDelete}
+							title="Apagar este evento?"
+							apiUrl="/event"
+							onClose={handleDeleteClose}
+							onSucess={handleDeletedItem}
+						>
+							<Typography variant="body2" color='textSecondary' gutterBottom>
+								As pessoas não poderão mais ver este evento e as
+								fotos associadas a ele. Esta operação é
+								irreversível!
+							</Typography>
+							<EventoItem
+								actividade={itemToDelete}
+								mt={2}
+								mb={2}
+							/>
+						</DeleteItemDialog>
+					</>
+				)}
 				<Box mt={4} />
 			</Container>
 		</Box>
@@ -217,7 +318,7 @@ export default function EventoPage(props) {
 }
 
 
-function Content({ backend }) {
+function Content({ backend, isAuthenticated, handleDeleteClick }) {
 
 	if (backend.loading && !backend?.data.listEventos.length) {
 		return (
@@ -244,7 +345,14 @@ function Content({ backend }) {
 
 	return backend?.data.listEventos && backend?.data.listEventos.map((evento, key) => (
 		<Grid key={key} item xs={12} sm={6} md={4}>
-			<EventoItem actividade={evento} />
+			<EventoItem
+				actividade={evento}
+				onDeleteClick={
+					isAuthenticated
+						? handleDeleteClick(evento)
+						: undefined
+				}
+			/>
 		</Grid>
 	))
 
@@ -264,7 +372,7 @@ export async function getStaticProps() {
 				listEventos
 			}
 		},
-		//revalidate: 60 * 60 * 15
+		revalidate: 60 * 15
 	}
 
 }

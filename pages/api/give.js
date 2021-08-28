@@ -2,6 +2,9 @@ import mysqlDB from '../../src/services/mysqldb';
 import registerPubRequestDB from '../../src/helpers/handlePubRequest';
 
 import bodyParser from 'body-parser';
+import { NotFound } from '../../src/helpers/errors';
+
+import dateToString from "../../src/helpers/dateToString";
 
 export const config = {
     api: {
@@ -19,26 +22,38 @@ export default registerPubRequestDB(
     false
 ).get(bodyParser.json(), async (req, res, next) => {
 
-    if(!req.query.page) req.query.page = 1;
-    if(!req.query.pageSize) req.query.pageSize = 3;
+    if (!req.query.dateQueryFrom) req.query.dateQueryFrom = dateToString('Y-M-01 00:00:00');
+    if (!req.query.dateQueryUntil) req.query.dateQueryUntil = dateToString('Y-M-30 23:59:59');;
+    if (!req.query.pageSize) req.query.pageSize = 3;
 
-    const offset = (req.query.page-1) * req.query.pageSize;
+    const pageSize = mysqlDB.escape(Number(req.query.pageSize))
 
-    try{
-        const rows = await mysqlDB.query(`SELECT * FROM doacao ORDER BY id DESC LIMIT ${offset},${req.query.pageSize}`);
+    let SQL;
+    let FETCH_DOACAO_RESUME_SQL;
 
-        if (!rows.length) throw new NotFound('Ainda não tem nenhuma doação feita.', 44);
+    SQL = `SELECT * FROM doacao WHERE criadoEM >= '${req.query.dateQueryFrom}' AND criadoEM ${req.query.offsetDate ? '<' : '<='} '${req.query.offsetDate || req.query.dateQueryUntil}' ORDER BY id DESC LIMIT ${pageSize}`;
+    FETCH_DOACAO_RESUME_SQL = `SELECT COUNT(doacao.id) as n_doacoes, SUM(doacao.valor) as total_arrecadado FROM doacao WHERE criadoEM >= '${req.query.dateQueryFrom}' AND criadoEM <= '${req.query.dateQueryUntil}'`;
 
-        await mysqlDB.end();
+
+    try {
+        const rows = await mysqlDB.query(SQL);
+
+        let rowDoacoesResume = {};
+
+        if (!req.query.offsetDate)
+            rowDoacoesResume = await mysqlDB.query(FETCH_DOACAO_RESUME_SQL);
+
+        if (!rows.length) throw new NotFound('Ainda não foram feitas nenhuma doação.', 44);
 
         res.status(200).json({
             success: {
-                data: rows
+                data: rows,
+                doacoesResume: rowDoacoesResume[0]
             }
         })
 
-    }catch(error){
+    } catch (error) {
         next(error);
     }
 
-});;
+})
