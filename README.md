@@ -1,3 +1,5 @@
-Este é um site criado com NextJS, de uma instituição religiosa.
+## IJNM
+
+Este é um site institucional criado com NextJS.
 
 Endereço: https://ijnm.vercel.app/
